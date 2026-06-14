@@ -36,10 +36,7 @@ stages:
       inputs:
         SonarQube: 'aks-sonarqube'
         scannerMode: 'Other'
-        extraProperties: |
-          sonar.login=$(SONAR_TOKEN)
-          sonar.java.binaries=target/classes
-    - script: mvn -B -Dmaven.test.skip=false clean verify sonar:sonar -Dsonar.login=$(SONAR_TOKEN)
+    - script: mvn -B -Dmaven.test.skip=false clean verify sonar:sonar
       displayName: 'Run Maven build and SonarQube analysis'
     - task: SonarQubePublish@8
       inputs:
