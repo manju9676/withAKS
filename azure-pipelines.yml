@@ -65,9 +65,9 @@ stages:
         containerRegistry: 'sampledemo'
         command: 'build'
         Dockerfile: '**/Dockerfile'
-        tags: |
-          $(containerRegistry)/$(imageRepository):$(tag)
-          $(containerRegistry)/$(imageRepository):latest
+        arguments: |
+          -t $(containerRegistry)/$(imageRepository):$(tag)
+          -t $(containerRegistry)/$(imageRepository):latest
     - script: |
         docker images 
       displayName: List Docker images
