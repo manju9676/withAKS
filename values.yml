@@ -1,17 +1,11 @@
+monitoringPasscode: "Sonar@123456"
+
 postgresql:
   enabled: true
-
-persistence:
-  enabled: true
-  size: 20Gi
 
 service:
   type: LoadBalancer
 
-resources:
-  requests:
-    cpu: 500m
-    memory: 2Gi
-  limits:
-    cpu: 1
-    memory: 4Gi
+persistence:
+  enabled: true
+  size: 20Gi
