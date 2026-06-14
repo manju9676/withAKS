@@ -33,15 +33,18 @@ stages:
     steps:
     - task: SonarQubePrepare@8
       inputs:
-        SonarQube: 'aks-sonarqube'
-        scannerMode: 'Other'
-    - task: Maven@3
+        SonarQube: 'sonarqube'
+        scannerMode: 'other'
+    - task: Maven@4
+      displayName: 'Build and Analyze'
       inputs:
         mavenPomFile: 'pom.xml'
-        goals: 'clean verify sonar:sonar'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '21'
-        publishJUnitResults: false
+        goals: 'clean package'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'Path'
+        jdkDirectory: '/usr/lib/jvm/java-17-openjdk-amd64'
+        sonarQubeRunAnalysis: true
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
