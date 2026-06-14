@@ -88,8 +88,8 @@ stages:
       displayName: Trivy Security Scan
     - task: Docker@2
       inputs:
-        containerRegistry: 'sampledemo'
-        repository: 'manjuwithaks'
+        containerRegistry: $(containerRegistry)
+        repository: $(imageRepository)
         command: 'push'
     - upload: manifests
       artifact: manifests
