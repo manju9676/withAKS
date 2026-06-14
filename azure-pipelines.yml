@@ -28,16 +28,18 @@ stages:
   jobs:
   - job: CQA
     displayName: CQA
-  - task: SonarQubePrepare@8
-    inputs:
-      SonarQube: 'aks-sonarqube'
-      scannerMode: 'other'
-  - task: SonarQubeAnalyze@8
-    inputs:
-      jdkversion: 'JAVA_HOME_17_X64'
-  - task: SonarQubePublish@8
-    inputs:
-      pollingTimeoutSec: '300'
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: SonarQubePrepare@8
+      inputs:
+        SonarQube: 'aks-sonarqube'
+        scannerMode: 'Other'
+    - script: mvn -B clean verify sonar:sonar
+      displayName: 'Run Maven build and SonarQube analysis'
+    - task: SonarQubePublish@8
+      inputs:
+        pollingTimeoutSec: '300'
 
 - stage: Build
   displayName: Build stage
