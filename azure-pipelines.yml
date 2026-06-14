@@ -28,16 +28,17 @@ stages:
   jobs:
   - job: CQA
     displayName: CQA
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - script: echo Hello, world!
-      displayName: 'Run a one-line script'
+  - task: SonarQubePrepare@8
+    inputs:
+      SonarQube: 'aks-sonarqube'
+      scannerMode: 'other'
+  - task: SonarQubeAnalyze@8
+    inputs:
+      jdkversion: 'JAVA_HOME_17_X64'
+  - task: SonarQubePublish@8
+    inputs:
+      pollingTimeoutSec: '300'
 
-    - script: |
-        echo Add other tasks to build, test, and deploy your project.
-        echo See https://aka.ms/yaml
-      displayName: 'Run a multi-line script'
 - stage: Build
   displayName: Build stage
   jobs:
