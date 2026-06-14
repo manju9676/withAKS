@@ -30,14 +30,18 @@ stages:
     displayName: CQA
     pool:
       vmImage: $(vmImageName)
-    container: maven:3.9.6-eclipse-temurin-21
     steps:
     - task: SonarQubePrepare@8
       inputs:
         SonarQube: 'aks-sonarqube'
         scannerMode: 'Other'
-    - script: mvn -B -Dmaven.test.skip=false clean verify sonar:sonar
-      displayName: 'Run Maven build and SonarQube analysis'
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean verify sonar:sonar'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '21'
+        publishJUnitResults: false
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
