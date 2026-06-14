@@ -62,7 +62,7 @@ stages:
     - task: Docker@2
       displayName: Build Docker image
       inputs:
-        containerRegistry: $(containerRegistry)
+        containerRegistry: $(dockerRegistryServiceConnection)
         command: 'build'
         Dockerfile: '**/Dockerfile'
         arguments: |
@@ -88,9 +88,10 @@ stages:
       displayName: Trivy Security Scan
     - task: Docker@2
       inputs:
-        containerRegistry: $(containerRegistry)
+        containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         command: 'push'
+        tags: '$(tag);latest'
     - upload: manifests
       artifact: manifests
 
