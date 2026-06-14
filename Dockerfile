@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile: build with Maven, run on Tomcat
-FROM maven:3.8.8-openjdk-11 AS build
+FROM maven:3.9.6-eclipse-temurin-11 AS build
 WORKDIR /workspace
 
 # Copy only what we need to build the WAR
