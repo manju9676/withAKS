@@ -33,7 +33,7 @@ stages:
     steps:
     - task: SonarQubePrepare@8
       inputs:
-        SonarQube: 'sonarqube'
+        SonarQube: 'aks-sonarqube'
         scannerMode: 'other'
     - task: Maven@4
       displayName: 'Build and Analyze'
