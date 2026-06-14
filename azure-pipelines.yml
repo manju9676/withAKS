@@ -46,6 +46,7 @@ stages:
         jdkVersionOption: '21'
         jdkArchitectureOption: 'x64'
         sonarQubeRunAnalysis: true
+        options: '-X -Dsonar.verbose=true'
     - task: SonarQubePublish@8
       inputs:
         pollingTimeoutSec: '300'
