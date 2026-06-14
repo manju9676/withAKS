@@ -66,6 +66,7 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         arguments: |
+          --no-cache
           -t $(containerRegistry)/$(imageRepository):$(tag)
           -t $(containerRegistry)/$(imageRepository):latest
     - script: |
