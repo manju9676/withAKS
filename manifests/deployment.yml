@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: manjuwithaks 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manjuwithaks
+  template:
+    metadata:
+      labels:
+        app: manjuwithaks 
+    spec:
+      containers:
+        - name: manjuwithaks 
+          image: sampledemo.azurecr.io/manjuwithaks
+          ports:
+          - containerPort: 8080
