@@ -30,12 +30,8 @@ stages:
     displayName: CQA
     pool:
       vmImage: $(vmImageName)
+    container: maven:3.9.6-eclipse-temurin-21
     steps:
-    - task: JavaToolInstaller@0
-      inputs:
-        versionSpec: '21'
-        jdkArchitectureOption: 'x64'
-        jdkSourceOption: 'AzurePipeline'
     - task: SonarQubePrepare@8
       inputs:
         SonarQube: 'aks-sonarqube'
