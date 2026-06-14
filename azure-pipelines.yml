@@ -60,10 +60,14 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
+      displayName: Build Docker image
       inputs:
         containerRegistry: 'sampledemo'
         command: 'build'
         Dockerfile: '**/Dockerfile'
+        tags: |
+          $(containerRegistry)/$(imageRepository):$(tag)
+          $(containerRegistry)/$(imageRepository):latest
 
     - script: |
         sudo apt-get install wget gnupg
@@ -77,7 +81,7 @@ stages:
           --severity HIGH,CRITICAL \
           --exit-code 1 \
           --no-progress \
-          $(imageRepository):$(tag)
+          $(containerRegistry)/$(imageRepository):$(tag)
       displayName: Trivy Security Scan
     - task: Docker@2
       inputs:
