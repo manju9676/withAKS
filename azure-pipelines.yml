@@ -31,11 +31,19 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: UseJavaVersion@0
+      inputs:
+        versionSpec: '21'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'AzurePipeline'
     - task: SonarQubePrepare@8
       inputs:
         SonarQube: 'aks-sonarqube'
         scannerMode: 'Other'
-    - script: mvn -B clean verify sonar:sonar
+        extraProperties: |
+          sonar.login=$(SONAR_TOKEN)
+          sonar.java.binaries=target/classes
+    - script: mvn -B -Dmaven.test.skip=false clean verify sonar:sonar -Dsonar.login=$(SONAR_TOKEN)
       displayName: 'Run Maven build and SonarQube analysis'
     - task: SonarQubePublish@8
       inputs:
