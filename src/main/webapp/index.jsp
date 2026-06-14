@@ -9,5 +9,7 @@
     <h1>Sample Java Webapp</h1>
     <p>Current server time: <%= new java.util.Date() %></p>
     <p><a href="${pageContext.request.contextPath}/hello">Call HelloServlet</a></p>
+    <h1>Environment Variables</h1>
+    
 </body>
 </html>
