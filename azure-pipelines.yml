@@ -72,8 +72,17 @@ stages:
         sudo apt-get update
         sudo apt-get install trivy
       displayName: Install Trivy
-
-
+    - script: |
+        trivy image \
+          --severity HIGH,CRITICAL \
+          --exit-code 1 \
+          --no-progress \
+          $(imageRepository):$(tag)
+      displayName: Trivy Security Scan
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'sampledemo'
+        command: 'push'
     - upload: manifests
       artifact: manifests
 
